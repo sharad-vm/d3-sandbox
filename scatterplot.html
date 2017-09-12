@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+ <script>
+ var h = 350;
+var w = 400;
+
+monthlySales = [
+     {"month":10, "sales":100, "color": "blue"},
+     {"month":20, "sales":130, "color": "yellow"},
+     {"month":30, "sales":250, "color": "green"},
+     {"month":40, "sales":300, "color": "red"},
+     {"month":50, "sales":265, "color": "purple"},
+     {"month":60, "sales":225, "color": "grey"},
+     {"month":70, "sales":180, "color": "orange"},
+     {"month":80, "sales":120, "color": "black"},
+     {"month":90, "sales":145, "color": "teal"},
+     {"month":100, "sales":130, "color": "black"}
+];
+
+//create SVG
+var svg = d3.select("body")
+            .append("svg")
+            .attr({ width:w, height: h});
+
+
+//add dots
+var dots = d3.selectAll("circle")
+             .data(monthlySales)
+             .enter()
+             .append("circle")
+             .attr({
+                    "cx": function(d) {return d.month;},
+                    "cy": fucntion(d) {return h-d.sales;},
+                    "r":10,
+                    "fill": function(d) {return d.color;}
+                    });
+</script>
+</body>
+</html>
