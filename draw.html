@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="description" content="Drawing Basic Shapes - Bars" />
+<meta name="description" content="Drawing Basic Shapes" />
   <meta charset="utf-8">
   <title>Drawing SVG Shapes with D3</title>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -15,7 +15,7 @@
   </svg>
   
   
-  <!-- trying with D3 -->
+  <!-- trying a rectangle with D3 -->
   <h3>D3 Bar</h3>
   <script>
     d3.select("body") //select the <body> html tag
@@ -26,6 +26,17 @@
           .style("fill", "blue"); //fill the bar w/ the color blue
   </script>
   
+    <!-- trying a circle with D3 -->
+  <h3>D3 Circle</h3>
+  <script>
+    d3.select("body") //select the <body> html tag
+      .append("svg") //add a new <svg> html element
+      .append("circle") //add a new <circle> html element which will be our circle
+          .attr("cx", 25) //set the x-axis of our circle
+          .attr("cy", 25) //set the y-axis of our circle
+          .attr("r", 25) //set the radius of the circle
+          .style("fill", "blue"); //fill the bar w/ the color blue
+  </script>
   
 </body>
 </html>
