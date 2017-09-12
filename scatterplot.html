@@ -37,7 +37,7 @@ var dots = d3.selectAll("circle")
              .append("circle")
              .attr({
                     "cx": function(d) {return d.month;},
-                    "cy": fucntion(d) {return h-d.sales;},
+                    "cy": function(d) {return h-d.sales;},
                     "r":10,
                     "fill": function(d) {return d.color;}
                     });
