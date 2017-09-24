@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <style>
+        </style>
+    </head>
+    <body>
+        <style type="text/css">
+    body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: xx-large;
+	font-weight: bold;
+	background-color: #374E50;
+	border-radius: 4px;
+	padding: 10px;
+	text-align: center;
+    }
+    
+div.tooltip {
+    position: absolute; /*very important*/
+    text-align: left;    
+    padding: 5px 10px 5px 10px;
+    font: bold 11px sans-serif;
+    color: black;
+    background: yellow;
+    border-radius: 8px;  
+    pointer-events: none;
+}
+
+/* do this or append circles AFTER appending recs */
+rect {
+    pointer-events: none;
+}
+        </style>
+        <script>
+
+            //Width and height
+            var w = 700;
+            var h = 500;
+
+            //Define map projection
+            var projection = d3.geo.mercator()
+                                   .translate([w/2, h/1.7])
+                                   .scale([100]);
+
+            //Define path generator
+            var path = d3.geo.path()
+                             .projection(projection);
+            
+            //Add title
+            d3.select("body")
+                .append("h4")
+                .text("Meteor Strikes");
+                
+            //Create SVG element
+            var svg = d3.select("body").append("svg").attr({width:w, height: h});
+
+            //Load in GeoJSON data
+            d3.json("world_countries.json", function(json) {
+                
+                //Bind data and create one path per GeoJSON feature
+                svg.selectAll("path")
+                   .data(json.features)
+                   .enter()
+                   .append("path")
+                   .attr("d", path)
+                   .attr("fill","#908988");
+                   
+
+            var init = 0;
+            
+            var color = ["red", "orange"]
+            
+              //Load in cities data
+              d3.csv("MeteorStrikesDataSet.csv", function(data) {
+                
+            
+             var sorted = data.sort(function(a, b) {
+                return d3.ascending(a.year, b.year); 
+             });
+                
+             var meteors = svg.selectAll("circle")
+                   .data(sorted)
+                   .enter()
+                   .append("circle")
+                   .attr("cx", function(d) {
+                     return projection([d.longitude, d.latitude])[0];
+                   })
+                   .attr("cy", init)
+                   .attr("r", 3)
+                   .attr("fill", "white")
+                   .attr("opacity", 0.7)
+                   
+                   meteors.transition()
+                   .duration(function(d,i){return 3*((i/5)+1);})
+                   .attr("cy", function(d) {
+                     return projection([d.longitude, d.latitude])[1];
+                   })
+                   .attr("r", function(d) {
+                    return Math.sqrt(parseInt(d.mass_g)* 0.00005/3.14);
+                   })
+                   .attr("fill", function(d) {
+                       if (d.fell_found == "Fell") 
+                       return "red";
+                       else 
+                       return "orange";
+                   });
+                   
+                            
+                 meteors.append("svg:title")
+                        .text(function(d) {
+                            return ["Place: " + d.place,
+                                    " Year: " + d.year];
+                        });
+
+                   //Add title
+                 d3.select("h4")
+                    .text("Meteor Strikes" + d.year);
+            
+            var legend = svg.selectAll(".legend")
+      .data(color.domain())
+    .enter().append("div")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+              });
+
+
+
+            });
+
+        </script>
+    </body>
+</html>
