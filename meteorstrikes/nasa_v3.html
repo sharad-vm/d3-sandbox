@@ -1,0 +1,587 @@
+    <html>
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <style>
+        </style>
+        <title>Meteorite Strikes</title>
+    </head>
+    <body>
+    <!-- HEADER -->
+      <div class="title">
+        <div>Meteorite Strikes</div>
+        <div class="scroll1"> </div>
+        <div class="scroll2"> </div>
+        <div class="scroll3"> </div>
+      </div>
+    <!--Use bootstrap grid system to separate map and info box-->
+    <div class="container-fluid page">
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="carousel">
+          <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+            <ul class="nav navbar-nav">
+            <li><a href="#info" class="btn" id="1">Info</a></li>
+            <li><a href="#view" class="btn" id="2">Population Density</a></li>
+            <li><a href="#data" class="btn" id="3">Data</a></li>
+            </ul>
+            </div>
+          </nav>
+          <div id="D1" class = "buttons">
+          <h4>What are Meteorites?</h4>
+          <p>A meteorite is a meteoroid (a piece of an asteroid or comet) that 
+          survives the passage through the Earth's atmosphere and lands on the earth.
+          <br><br>
+          </p>
+          <h4>How often do Meteorites strike?</h4>
+          <p>Almost everyday our planet is bombarded with tons of small particles and dust
+          some of which our atmosphere protects our planet from.
+          <br><br>
+          About once a year, an automobile-sized asteroid hits Earth's atmosphere, 
+          creates an impressive fireball, and burns up before reaching the surface.
+          <br><br>
+          Every 2,000 years or so, a meteoroid the size of a football field hits 
+          Earth and causes significant damage to the area.
+          <br><br>
+          Only once every few million years, an object large enough to threaten 
+          Earth's civilization comes along. Impact craters on Earth, the moon and 
+          other planetary bodies are evidence of these occurrences.
+          <br><br>
+          It is believed that anything larger than half mile in diameter could 
+          have worldwide effects.
+          <br><br>
+          Weighing in at 66 tons, the largest known meteorite found is 
+          <a href="http://geology.com/records/largest-meteorite/">Hoba</a> in 
+          Namibia, Africa.
+          </p>
+          <h4>Important Notes</h4>
+          <p>The original data set had entries for over 45000 meteorites. 
+          After processing and cleaning the data for sanity, the following meteorites
+          were excluded from the visualization which finally resulted in about 
+          34000 meteorites.
+          <ul>
+          <li>A few entries here contain date information that was incorrectly parsed 
+          into the NASA database and so any date that is before 860 CE or 
+          after 2016 are incorrect and have been trimmed.</li>
+          <li>A few entries have latitude and longitude of 0N/0E 
+          (off the western coast of Africa, where it would be quite difficult 
+          to recover meteorites). Many of these were actually discovered in 
+          Antarctica, but exact coordinates were not given. 
+          0N/0E locations have been excluded from this visualization.</li>
+          <li>There may be other discrepancies that have not been identified yet.</li>
+          <li>In the population density view, the data for some islands and Antarctica 
+          are not available and Antarctica was imputed with a lighter scale value
+          and the rest of the islands were not considered for this imputation.</li>
+          </ul>
+          </p>
+        </div>
+        <div id="D2" class = "buttons">
+        <h4>Population Density View</h4>
+        <p>While the first view illustrates the meteorite strikes on a world map, 
+        I also wanted to give an emphasis on the population density of those 
+        regions to visualize the effect of meteorite strikes on human life.<br><br>
+        This view lightens the areas of the world where population density is 
+        low and vice versa. Antarctica is an exception as based on the scale of 
+        population density, it should not even show up. The population there as
+        of now is mostly floating for research purposes and almost non-existent 
+        in the past. For the purposes of this view though, a lighter scale value
+        has been imputed on Antarctica just to make sense of the map.<br><br> 
+        The data for population density has been taken from the World Bank and 
+        the data used for this particular visualization is from the year 2016. 
+        This might not paint an exact picture of the population density of an area 
+        at the time of the actual meteorite strike, but it definitely gives an idea.
+        Moreover, in most of the countries, population has only been growing 
+        year over year and so, this would work for a worst-case scenario.
+        </p>
+        </div>
+        <div id="D3" class = "buttons">
+        <h4>About the Data</h4>
+        <p>The primary data used in this visualization comes from 
+        NASA's Data Portal, and is based on The Meteoritical Society's 
+        Meteoritical Bulletin Database (this latter database provides additional 
+        information such as meteorite images, links to primary sources, etc.). 
+        </p>
+        <h4>Data Sources</h4>
+        <ul>
+        <li><a href="https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh">
+        NASA's Data Portal</a>
+        </li>
+        <li><a href="https://data.worldbank.org/indicator/EN.POP.DNST">
+        The World Bank</a>
+        </li>
+        </ul>
+        <h4>Technology</h4>
+        <p>The visualization is created using, HTML, D3 and JavaScript.<p>
+        </div>
+      </div>
+    </div>
+ 
+  <div class="col-xs-8">
+
+ 	<div id="map"></div>
+
+  <div style="position:absolute;top:200px;z-index:999999!important;color:red;left:100px;opacity:0" id="dialog">
+  </div>
+        
+<script>
+HideDiv();
+
+$('.btn').on("click", function() {
+  showHide($(this).prop('id'))
+});
+
+//Function to show the element corresponding to the button clicked
+function showHide(id) {
+  HideDiv();
+  var id = '#D' + id;
+  $(id).show();
+}
+
+//Function to hide the elements corresponding to the buttons by default
+function HideDiv() {
+
+  $('#D1').hide();
+  $('#D2').hide();
+  $('#D3').hide();
+}
+
+//Show Info by default
+  $('#D1').show();
+
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet" />
+<style type="text/css">
+	.title{
+	z-index: 11;	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	position: fixed;
+	background-color: #374E50;
+	color: #908988;
+	height:54px;
+	width: 100%;
+  	left: 0;
+  	top: 0;
+  	opacity: 1;
+  	text-align: left;
+	}
+	
+	#map {
+	margin-left:0px;
+	left: 0px;
+	top:0px;
+	width:70%;
+	height:100%;
+	z-index: 11;
+	padding: 0px;
+	}
+	
+	.axis{
+	color: #908988;
+	font-size: x-small;
+	}
+	
+    body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	color: #908988;
+	font-weight: bold;
+	position: absolute;
+	background-color: #374E50;
+	margin-top:0px;
+	top:0px;
+	padding: 0px;
+	align: left;
+    }
+    
+   .title .scroll1 {
+	z-index: 11;	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: medium;
+	position: fixed;
+	background-color: rgba(0,0,0,0.3);
+	color: whitesmoke;
+	height:20px;
+	width: 33%;
+  	opacity: 0.75;
+  	text-align: middle;
+
+	}
+	
+	
+	.title .scroll2 {
+	z-index: 11;	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: medium;
+	position: fixed;
+	background-color: orange;
+	color: whitesmoke;
+	height:20px;
+	width: 66%;
+  	opacity: 0.75;
+  	text-align: middle;
+  	margin-left:30%;
+	}
+	
+	.title .scroll3 {
+	z-index: 11;	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: medium;
+	position: fixed;
+	background-color: red;
+	color: whitesmoke;
+	height:20px;
+	width: 100%;
+  	opacity: 0.75;
+  	text-align: middle;
+  	margin-left:66%;
+	}
+	.carousel{
+	z-index: 11;	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: medium;
+	position: fixed;
+	background-color: rgba(55,78,80,0.6);
+	color: #908988;
+	height:100%;
+	width: 100%;
+  	margin-left: 70%;
+  	top: 54px;
+  	text-align: left;
+	}
+    .carousel .navbar-nav > li > a {
+    padding-top:2px !important; 
+    padding-bottom:2px !important;
+    margin-left: 0%;
+    text-decoration: none;
+    color: #908988;
+    font-size: medium;
+    opacity:0.6;
+    }
+    .carousel .navbar-nav > li:hover {
+    background-color: rgba(55,78,80,0.6);
+    }
+    .navbar {
+        border: 0;
+        min-height:22px !important;
+        background-color: rgba(0,0,0,0.3);
+    }
+    .buttons{
+    font-size:small;
+    margin-right:70%;
+    max-width: 55%;
+    height: 520px;
+    overflow: scroll;
+    overflow-x:hidden;
+    }
+    .btn{
+    font-size:medium;
+    color: #908988;
+    }
+div {
+    display: block;
+}
+
+scroll1.tooltip {
+    position: absolute; /*very important*/
+    text-align: left;    
+    padding: 5px 10px 5px 10px;
+    font: bold 11px sans-serif;
+    color: white;
+    background: black;
+    border-radius: 8px;  
+    pointer-events: none;
+}
+
+/* do this or append circles AFTER appending recs */
+rect {
+    pointer-events: none;
+}
+        </style>
+        <script>
+        $("#dialog").html('The first ever meteorite was recorded in the year 860');
+        $("#dialog").fadeIn('slow').animate({opacity: 0.7}, 1000).fadeOut('slow'); 
+
+
+
+            //Width and height
+            var margin = 50
+            var w = $( window ).width() - 7*margin;
+            var h = $( window ).height() - margin;
+
+            //Define map projection
+            var projection = d3.geo.mercator()
+                                   .translate([w/2, h/1.72])
+                                   .scale([100]);
+
+            //Define path generator
+            var path = d3.geo.path()
+                             .projection(projection);
+                             
+            
+            var init = 0;
+            
+            //Define zoom scale extent and call out the function zoomed
+            var zoom = d3.behavior.zoom()
+                        .scaleExtent([1, 30])
+                        .on("zoom", zoomed);
+            
+            //Function that performs the zoom effect                    
+            function zoomed() {
+            svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+            }
+            
+             
+            //Create SVG element
+            var svg = d3.select("#map")
+                        .append("svg")
+                        .attr({width:w, height: h})
+                        .call(zoom);
+   
+            //Load in GeoJSON data
+            d3.json("world_countries.json", function(error, json) {
+                
+                //Load population density data
+                d3.csv("popdensity.csv", function(error, csv) {
+
+                var world = json.features;
+
+                //Add population to the json file from the csv file for each country
+                csv.forEach(function(d) {
+                    
+                    world.forEach(function(e) {
+                      if ( d.CountryCode === e.id) {
+                        e.pop = d.Pop;
+                         }
+                    });
+                });
+
+                //Bind data and create one path per GeoJSON feature
+                svg.selectAll("path")
+                   .data(world)
+                   .enter()
+                   .append("path")
+                   .attr("d", path)
+                   .attr("fill","#908988");
+                   //.call(zoom);
+                   
+                //Change the opacity of the countries based on their population density
+                 $(document).ready(function() {
+                 $("#2").click(function(){
+                    svg.selectAll("path")
+                    .style("fill-opacity", function(d, i) {
+                      if (+d.pop>0) {
+                        return Math.sqrt(+d.pop)/20;
+                        }
+                      else { return 0.1; }
+                        });
+                    }); 
+                  });
+
+                //Change the opacity back when clicked on other buttons
+                $(document).ready(function() {
+                $("#1").click(function(){
+                  svg.selectAll("path")
+                  .style("fill-opacity", 0.95);
+                  }); 
+                });
+
+                $(document).ready(function() {
+                $("#3").click(function(){
+                  svg.selectAll("path")
+                  .style("fill-opacity", 0.95);
+                  }); 
+                });
+
+              //Load in meteorite data
+             d3.csv("meteorite-landings-trimmed.csv", function(data) {
+             
+             //Initialize an empty array   
+             var years = [];
+             
+             //Load all the years available into the years array
+             data.map(function(d) {
+                years = data.map(function(d) { return d.year; });
+                console.log(years)
+                });
+                
+
+             var sorted = data.sort(function(a, b) {
+                return d3.ascending(a.year, b.year); 
+             });
+            
+             var meteor = svg.selectAll("circle")
+                   .data(sorted)
+                   .enter()
+                   .append("circle")
+                   
+            function update(year) {
+                    var meteors = meteor.filter(function(d) {
+                   return d.year == year;
+                   })
+                   .attr("cx", function(d) {
+                     return projection([d.reclong, d.reclat])[0];
+                   })
+                   .attr("cy", init)
+                   .attr("r", 3)
+                   .attr("fill", "#908988")
+                   .attr("opacity", 0)
+                   .on("mouseover", function(d) {      
+                        //canvas.transition()        
+                          //  .duration(200)      
+                            //.style("opacity", .8);      
+                        //canvas.html(d.name + "<br/>"  + d.year)  
+                          //  .style("left", (d3.event.pageX) + "px")     
+                            //.style("top", (d3.event.pageY - 50) + "px");    
+                    
+                       d3.select(this)
+                            .style("opacity", .9)
+                            .attr("r", function(d) {
+                              return Math.sqrt(parseInt(d.mass)* 0.00007/3.14);
+                            });
+                    })                  
+                    .on("mouseout", function(d) {       
+                        //canvas.transition()        
+                          //  .duration(500)      
+                            //.style("opacity", 0); 
+                        
+                        d3.select(this)   
+                            .style("opacity", 0.5)
+                            .attr("r", function(d) {
+                              return Math.sqrt(parseInt(d.mass)* 0.00005/3.14);
+                            });
+                    });
+                    
+
+                   meteors.transition()
+                   //.ease("quad")
+                   //.duration(function(d,i){return 3*((i/5)+1);})
+                   //.delay(function(d,i){return 15*(i+1);})
+                   .duration(function(d,i){
+                   if (d.year < 1700) {
+                   return 15*projection([d.reclong, d.reclat])[1];
+                   }
+                   else {
+                    return projection([d.reclong, d.reclat])[1];
+                   }})
+                   .attr("cy", function(d) {
+                     return projection([d.reclong, d.reclat])[1];
+                   })
+                   .attr("r", 3)
+                   .attr("stroke", "whitesmoke")
+                   .attr("opacity", 0.5)
+                   .attr("stroke-width", "0px")
+                   .transition()
+                    .duration(2000)
+                    .attr("stroke-width", "10px")
+                   .attr("r", function(d) {
+                    return Math.sqrt(parseInt(d.mass)* 0.00005/3.14);
+                   })
+                   .attr("fill", function(d) {
+                       if (d.fall == "Fell") 
+                       return "red";
+                       else 
+                       return "orange";
+                   })
+                   .attr("opacity", 0.5)
+                   .transition()
+                    .attr("stroke-width", "0px");
+                    
+                   //Add a tool tip on the circles
+                   meteors.append("svg:title")
+                        .text(function(d) {
+                            return ["Place: " + d.name,
+                                    " Year: " + d.year];
+                         });
+                    
+                    //Update the year scroll on the top
+                    d3.select(".scroll1")
+                    //.append("div")
+                    .text("Year: " + years[year_idx]);
+                        
+
+}
+         var year_idx = 0;
+         var yearload = 1000;
+
+         //Function to load each year based on the years array
+         function loadYears(){
+            update(years[year_idx]);
+            year_idx++;
+              
+            if (year_idx < 7)
+             {yearload = 3000;}
+            else 
+             {yearload = 1000;}
+            
+            if(year_idx< years.length){
+                window.setTimeout(loadYears, yearload);
+                }
+            }
+          
+          loadYears();
+         
+          //Total numer of meteorites
+          var count = meteor.size()
+          
+          //Number of Found meteorites
+          var fallencount = meteor
+                            .filter(function(d) 
+                              { return d.fall == "Fell" })
+                            .size()
+          
+          //Number of Observed meteorites
+          var foundcount = meteor
+                            .filter(function(d) 
+                              { return d.fall == "Found" })
+                            .size()
+              
+          //Function to animate the scroll from 0 to the total number of meteorites
+          var customtween = function tweenText(label, newValue ) {
+                                return function() {
+                            //Current value as starting point for tween animation
+                            var currentValue = 0;
+                            //Interpolator and do not show nasty floating numbers
+                            var i = d3.interpolateRound( currentValue, newValue );
+
+                            return function(t) {
+                            this.textContent = label + i(t);
+                            };
+                        };
+            };
+                
+            //Transition the Observed scroll from 0 using custom tween fucntion 
+            d3.select(".scroll2")
+              .append("div")
+              .text(0)
+              .transition()
+              .duration(fallencount*50 )
+              .tween('text', customtween("Observed: ",fallencount));
+             
+            //Transition the Observed scroll from 0 using custom tween fucntion      
+            d3.select(".scroll3")
+              .append("div")
+              .text(0)
+              .transition()
+              .duration( foundcount*3 )
+              .tween('text', customtween("Found: ",foundcount));
+
+ 
+       });
+
+    });
+
+});
+
+        </script>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>
