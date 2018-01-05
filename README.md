@@ -30,3 +30,14 @@ There are 4 buttons that either display information in understanding the visuali
 
 In order to get all of this working, I had to combine 3 different datasets - a geojson file, meteorites data and population density data.
 I joined the geojson file and the population density file and added the population density (per sq. km) to the geojson file for each country. I then used the meteorites data to plot the meteorites on the map.
+
+### Feedback
+
+I received feeback from 3 people loosely based on the questions mentioned in Udacity's project submission page.
+
+##### Feedback 1
+
+[First Iteration](https://bl.ocks.org/sharad-vm/6821d9945d06e6c5e5b767fc37aed77b)
+
+>The animation and the idea of a scroll on the right side look good. However, the information provided in the visual is minimal.
+>This could be improved. Zoom on the map is not smooth. It does not work correctly sometimes.
