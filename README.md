@@ -42,6 +42,14 @@ I received feeback from 3 people loosely based on the questions mentioned in Uda
 >The animation and the idea of a scroll on the right side look good. However, the information provided in the visual is minimal.
 >This could be improved. Zoom on the map is not smooth. It does not work correctly sometimes.
 
+##### Changes after Feedback 1
+
+I made a lot of changes after the first feedback.
+* Added a lot more information and buttons to navigate to different views to the scroll on the right
+* Added year to the header scroll
+* Added a 'strike' effect to the animation 
+* Added a Skip Intro button to skip the animation
+
 ##### Feedback 2
 
 [Second Iteration](http://bl.ocks.org/sharad-vm/dbe6ab9546c5acf2e0ab42b687da03ff)
@@ -56,3 +64,39 @@ I received feeback from 3 people loosely based on the questions mentioned in Uda
 >I don't understand the introduction message. Is this a placeholder as of now for some message?
 >The animation is slow but but does the job. I like the idea of 'Skip Intro'. You should consider making the button clear. It is being >cut off right now.
 >The counts don't seem to be in sync when Skip Intro feature is used and the animation sometimes looks like it is repeating a bunch of meteorites.
+
+##### Changes after Feedback 2 & 3
+
+* Removed the intro message
+* Modified and improved the scroll on the right
+* Improved language and font
+* Modified and improved the header scrolls
+
+##### Feedback 4
+
+[Third Iteration](http://bl.ocks.org/sharad-vm/2e743dae80e09b8aaa3779bc886a584d)
+
+From the same person who gave Feedback 3
+>Looks much better now. The different meteorites in conjunction with population density is clear.
+>Aesthetics could be improved further.
+
+##### Changes after Feedback 4
+
+* Modified and improved the background color and some aesthetics
+* Fixed and improved the header scroll issue with counts to be in sync with the animation
+
+[Final Version](http://bl.ocks.org/sharad-vm/af74ae5932de1bcf5a39b0f3f849d847)
+
+### Conclusion
+
+While I'm happy with the outcome of this visualization, I want to acknowledge the performance issue in SVG handling 
+so many circles and animation itself. In this regard, I have tried using Canvas instead of SVG to make the visualization faster.
+Keeping in mind a drawback of Canvas, that I cannot directly add a tooltip and will have to use a workaround to add a second hidden canvas to make the tooltip work and the time involved in making these changes, I will consider replacing SVG with Canvas in a future project. With SVG, the visualization works perfectly for everything else.
+
+### Resources
+
+* [Blocks](https://bl.ocks.org/)
+* [Feltron](http://feltron.com/)
+* [D3 - Animation & Interaction](http://synthesis.sbecker.net/articles/2012/07/10/learning-d3-part-3-animation-interaction)
+* [Animated Data - Peter Cook](http://animateddata.co.uk/)
+* [HTML5 - Canvas Tutorials](https://www.html5canvastutorials.com/tutorials/html5-canvas-circles/)
