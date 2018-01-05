@@ -1,4 +1,4 @@
-    <html>
+<html>
     <head>
         <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -72,8 +72,8 @@
           <h4>Important Notes</h4>
           <p>The original data set had entries for over 45000 meteorites. 
           After processing and cleaning the data for sanity, the following meteorites
-          were excluded from the visualization which finally resulted in about 
-          34000 meteorites.
+          were excluded from the visualization which finally resulted in a little
+          more than 22000 meteorites.
           <ul>
           <li>A few entries here contain date information that was incorrectly parsed 
           into the NASA database and so any date that is before 860 CE or 
@@ -148,29 +148,23 @@
         $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip(container= ".title");   
         });
-
 HideDiv();
-
 $('.btn').on("click", function() {
   showHide($(this).prop('id'))
 });
-
 //Function to show the element corresponding to the button clicked
 function showHide(id) {
   HideDiv();
   var id = '#D' + id;
   $(id).show();
 }
-
 //Function to hide the elements corresponding to the buttons by default
 function HideDiv() {
-
   $('#D1').hide();
   $('#D2').hide();
   $('#D3').hide();
   $('#D4').hide();
 }
-
 //Show Info by default
   $('#D2').show();
     
@@ -299,7 +293,6 @@ function HideDiv() {
     overflow: scroll;
     overflow-x:hidden;
     }
-
     div {
     display: block;
     }
@@ -311,12 +304,10 @@ function HideDiv() {
             var margin = 50,
                 w = $( window ).width() - 7*margin,
                 h = $( window ).height() - 0.1*margin;
-
             //Define map projection
             var projection = d3.geo.mercator()
                                    .translate([w/2, h/1.72])
                                    .scale([100]);
-
             //Define path generator
             var path = d3.geo.path()
                              .projection(projection);
@@ -376,7 +367,6 @@ function HideDiv() {
                             var currentValue = 0;
                             //Interpolator and do not show nasty floating numbers
                             var i = d3.interpolateRound( currentValue, newValue );
-
                             return function(t) {
                             this.textContent = label + i(t);
                             };
@@ -388,9 +378,7 @@ function HideDiv() {
                 
                 //Load population density data
                 d3.csv("popdensity.csv", function(error, csv) {
-
                 var world = json.features;
-
                 //Add population to the json file from the csv file for each country
                 csv.forEach(function(d) {
                     
@@ -400,7 +388,6 @@ function HideDiv() {
                          }
                     });
                 });
-
                 //Bind data and create one path per GeoJSON feature
                 svg.selectAll("path")
                    .data(world)
@@ -422,7 +409,6 @@ function HideDiv() {
                         });
                     }); 
                   });
-
                 //Change the opacity back when clicked on other buttons
                 $(document).ready(function() {
                 $("#2").click(function(){
@@ -430,15 +416,12 @@ function HideDiv() {
                   .style("fill-opacity", 0.95);
                   }); 
                 });
-
                 $(document).ready(function() {
                 $("#4").click(function(){
                   svg.selectAll("path")
                   .style("fill-opacity", 0.95);
                   }); 
                 });
-
-
               //Load in meteorite data
              d3.csv("meteorite-landings.csv", function(data) {
              
@@ -458,7 +441,6 @@ function HideDiv() {
                 if($.inArray(el, years) === -1) 
                 years.push(el);
                 });
-
              var sorted = data.sort(function(a, b) {
                 return d3.ascending(a.year, b.year); 
              });
@@ -469,16 +451,8 @@ function HideDiv() {
                    .append("circle")
           
             //Number of Observed meteorites
-            var fallencount = meteor
-                              .filter(function(d) 
-                               { return d.fall == "Fell" })
-                              .size()
-          
-            //Number of Found meteorites
-            var foundcount = meteor
-                              .filter(function(d) 
-                               { return d.fall == "Found" })
-                              .size()
+            var fallencount = 0,
+                foundcount = 0;
             
             //Add tooltip to the circles
             function addTooltip (d) {       
@@ -544,8 +518,24 @@ function HideDiv() {
                     d3.select(".scroll1")
                     //.append("div")
                     .text("Year: " + years[year_idx]);
-                        
-
+                    
+                    fallencount += meteors
+                                    .filter(function(d) 
+                                         { return d.fall == "Fell" })
+                                    .size();
+                            
+                    foundcount +=  meteors
+                                    .filter(function(d) 
+                                        { return d.fall == "Found" })
+                                    .size();
+                            
+                    d3.select(".scroll2")
+                    //.append("div")
+                    .text("Found: " + foundcount);
+                    
+                    d3.select(".scroll3")
+                    //.append("div")
+                    .text("Observed: " + fallencount);
 }
       $(document).ready(function() {
                 $("#1").click(function(){
@@ -579,13 +569,27 @@ function HideDiv() {
                     d3.select(".scroll1")
                     .text("Year: " + years[years.length - 1]);
                     
-                    //Transition the Observed scroll from 0 using custom tween fucntion 
+                    fallencount = 0;
+                    
+                    foundcount = 0;
+                    
+                    fallencount += meteor
+                                    .filter(function(d) 
+                                         { return d.fall == "Fell" })
+                                    .size();
+                            
+                    foundcount +=  meteor
+                                    .filter(function(d) 
+                                        { return d.fall == "Found" })
+                                    .size();
+                            
                     d3.select(".scroll2")
-                        .text("Found: " + foundcount);
-                        
-                    //Transition the Observed scroll from 0 using custom tween fucntion 
+                    //.append("div")
+                    .text("Found: " + foundcount);
+                    
                     d3.select(".scroll3")
-                        .text("Observed: " + fallencount);
+                    //.append("div")
+                    .text("Observed: " + fallencount);
              
                 }); 
         });    
@@ -593,7 +597,6 @@ function HideDiv() {
                          
          var year_idx = 0;
          var yearload = 1000;
-
          //Function to load each year based on the years array
          function loadYears(){
             
@@ -614,28 +617,24 @@ function HideDiv() {
           loadYears();
                 
             //Transition the Observed scroll from 0 using custom tween fucntion 
-            d3.select(".scroll2")
-              .append("div")
-              .text(0)
-              .transition()
-              .duration(foundcount*30 )
-              .tween('text', customtween("Found: ",foundcount));
+            //d3.select(".scroll2")
+            //  .append("div")
+            //  .text(0)
+            //  .transition()
+            //  .duration(foundcount*30 )
+            //  .tween('text', customtween("Found: ",foundcount));
              
             //Transition the Observed scroll from 0 using custom tween fucntion      
-            d3.select(".scroll3")
-              .append("div")
-              .text(0)
-              .transition()
-              .duration( fallencount*1200 )
-              .tween('text', customtween("Observed: ",fallencount));
-
+           // d3.select(".scroll3")
+            //  .append("div")
+            //  .text(0)
+            //  .transition()
+             // .duration( fallencount*1200 )
+            //  .tween('text', customtween("Observed: ",fallencount));
  
        });
-
     });
-
 });
-
         </script>
     </div>
     </div>
