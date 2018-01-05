@@ -41,3 +41,18 @@ I received feeback from 3 people loosely based on the questions mentioned in Uda
 
 >The animation and the idea of a scroll on the right side look good. However, the information provided in the visual is minimal.
 >This could be improved. Zoom on the map is not smooth. It does not work correctly sometimes.
+
+##### Feedback 2
+
+[Second Iteration](http://bl.ocks.org/sharad-vm/dbe6ab9546c5acf2e0ab42b687da03ff)
+
+>The message in the beginning looks odd. Any reason why you have this?
+>The animation looks goodin the beginning but it speeds up later and is not really visible. 
+>The numbers in the fallen and observed do not match the meteorites on screen.
+>I like how you tried to integrate population density on the map. I don't understand it's relationship with meteorites.
+
+##### Feedback 3 
+
+>I don't understand the introduction message. Is this a placeholder as of now for some message?
+>The animation is slow but but does the job. I like the idea of 'Skip Intro'. You should consider making the button clear. It is being >cut off right now.
+>The counts don't seem to be in sync when Skip Intro feature is used and the animation sometimes looks like it is repeating a bunch of meteorites.
