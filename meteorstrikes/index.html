@@ -4,7 +4,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
         <style>
         </style>
         <title>Meteorite Strikes</title>
@@ -69,27 +69,33 @@
           <a href="http://geology.com/records/largest-meteorite/">Hoba</a> in 
           Namibia, Africa.
           </p>
-          <h4>Important Notes</h4>
+          <h4>Story</h4>
           <p>The original data set had entries for over 45000 meteorites. 
           After processing and cleaning the data for sanity, the following meteorites
           were excluded from the visualization which finally resulted in a little
           more than 22000 meteorites.
           <ul>
-          <li>A few entries here contain date information that was incorrectly parsed 
-          into the NASA database and so any date that is before 860 CE or 
-          after 2016 are incorrect and have been trimmed.</li>
-          <li>A few entries have latitude and longitude of 0N/0E 
-          (off the western coast of Africa, where it would be quite difficult 
-          to recover meteorites). Many of these were actually discovered in 
-          Antarctica, but exact coordinates were not given. 
-          0N/0E locations have been excluded from this visualization.</li>
-          <li>In the cases where the data set has multiple masses for the same 
-          meteorite(or family) in the same year and location, the one with the 
-          largest mass (the rest could be burnt up fragments of the same meteorite)
-          alone has been considered for this visualization.</li>
-          <li>In the population density view, the data for some islands and Antarctica 
-          are not available and Antarctica was imputed with a lighter scale value
-          and the rest of the islands were not considered for this imputation.</li>
+          <li>The most important observation that I want to drive home is that 
+          there have been immensely more number of meteorites that were found than
+          observed.</li>
+          <li>All the technologically advanced countries have found a lot of meteorites
+          and vice versa. US, Australia, New Zealand, parts of Europe have a lot
+          of found meteorites when compared against their observed meteorites.
+          India, Pakistan and all the middle eastern countries have a lot of observed
+          meteorites and almost negligible amount of found meteorites.
+          However, Africa is one exception to this list. This could be due to the 
+          excavations from other first world countries in Africa.</li>
+          <li>With the Population Density view, I want to point out that all the
+          highly populated regions had the most number of observed meteorites.</li>
+          <li>Almost all the meteorites are away from the poles on the map. This 
+          could be due to 2 reasons 
+          - Due to poor human inhabitation in those areas,
+          the meteorites were neither found nore observed OR
+          - Due to the curvature of the planet and smaller surface area near the poles,
+          the chances of meteorite striking the planet away from the poles is 
+          probably higher.</li>
+          <li>Hover over the Observed and Found scrolls on the top to clearly 
+          notice the distribution of the meteorites that are selected.</li>
           </ul>
           </p>
         </div>
@@ -129,6 +135,32 @@
         The World Bank</a>
         </li>
         </ul>
+        <h4>Important Notes</h4>
+          <p>The original data set had entries for over 45000 meteorites. 
+          After processing and cleaning the data for sanity, the following meteorites
+          were excluded from the visualization which finally resulted in a little
+          more than 22000 meteorites.
+          <ul>
+          <li>A few entries here contain date information that was incorrectly parsed 
+          into the NASA database and so any date that is before 860 CE or 
+          after 2016 are incorrect and have been trimmed.</li>
+          <li>A few entries have latitude and longitude of 0N/0E 
+          (off the western coast of Africa, where it would be quite difficult 
+          to recover meteorites). Many of these were actually discovered in 
+          Antarctica, but exact coordinates were not given. 
+          0N/0E locations have been excluded from this visualization.</li>
+          <li>In the cases where the data set has multiple masses for the same 
+          meteorite(or family) in the same year and location, the one with the 
+          largest mass (the rest could be burnt up fragments of the same meteorite)
+          alone has been considered for this visualization.</li>
+          <li>In the population density view, the data for some islands and Antarctica 
+          are not available and Antarctica was imputed with a lighter scale value
+          and the rest of the islands were not considered for this imputation.</li>
+          <li>Almost all of the meteorites in this data set have been observed 
+          or found on land or close to land. It should also be noted that there
+          could be many more that were unobservable or unrecoverable.</li>
+          </ul>
+          </p>
         <h4>Technology</h4>
         <p>The visualization is created using, HTML, D3 and JavaScript.<p>
         </div>
@@ -169,9 +201,9 @@ function HideDiv() {
   $('#D2').show();
     
 </script>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https:////maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css">
 <link href='https://fonts.googleapis.com/css?family=Palanquin' rel='stylesheet'>
 <style type="text/css">
 	.title{
@@ -321,7 +353,8 @@ function HideDiv() {
             
             //Function that performs the zoom effect                    
             function zoomed() {
-            svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+            svg.attr("transform", 
+            "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
             }
             
              
@@ -332,30 +365,19 @@ function HideDiv() {
                         .call(zoom);
             
             //Handle mouseover
-            function handleMouseover (d) {      
-                        //canvas.transition()        
-                          //  .duration(200)      
-                            //.style("opacity", .8);      
-                        //canvas.html(d.name + "<br/>"  + d.year)  
-                          //  .style("left", (d3.event.pageX) + "px")     
-                            //.style("top", (d3.event.pageY - 50) + "px");    
-                    
+            function handleMouseover (d) {  
                        d3.select(this)
-                            .style("opacity", .9)
-                            .attr("r", function(d) {
+                         .style("opacity", .9)
+                         .attr("r", function(d) {
                               return Math.sqrt(parseInt(d.mass)* 0.00007/3.14);
                             });
             }            
             
             //Handle mouseout
             function handleMouseout (d) {       
-                        //canvas.transition()        
-                          //  .duration(500)      
-                            //.style("opacity", 0); 
-                        
-                        d3.select(this)   
-                            .style("opacity", 0.5)
-                            .attr("r", function(d) {
+                       d3.select(this)   
+                         .style("opacity", 0.5)
+                         .attr("r", function(d) {
                               return Math.sqrt(parseInt(d.mass)* 0.00005/3.14);
                             });
             }   
@@ -405,7 +427,7 @@ function HideDiv() {
                       if (+d.pop>0) {
                         return Math.sqrt(+d.pop)/20;
                         }
-                      else { return 0.1; }
+                      return 0.1;
                         });
                     }); 
                   });
@@ -479,9 +501,6 @@ function HideDiv() {
                    .on("mouseout", handleMouseout);
                     
                    meteors.transition()
-                   //.ease("quad")
-                   //.duration(function(d,i){return 3*((i/5)+1);})
-                   //.delay(function(d,i){return 15*(i+1);})
                    .duration(function(d,i){
                    if (d.year < 1700) {
                    return 15*projection([d.reclong, d.reclat])[1];
@@ -510,13 +529,12 @@ function HideDiv() {
                    })
                    .attr("opacity", 0.5)
                    .transition()
-                    .attr("stroke-width", "0px");
+                   .attr("stroke-width", "0px");
                     
                     addTooltip(meteors);
                     
                     //Update the year scroll on the top
                     d3.select(".scroll1")
-                    //.append("div")
                     .text("Year: " + years[year_idx]);
                     
                     fallencount += meteors
@@ -530,12 +548,40 @@ function HideDiv() {
                                     .size();
                             
                     d3.select(".scroll2")
-                    //.append("div")
-                    .text("Found: " + foundcount);
+                      .text("Found: " + foundcount);
                     
                     d3.select(".scroll3")
-                    //.append("div")
-                    .text("Observed: " + fallencount);
+                      .text("Observed: " + fallencount);
+                      
+                    $( ".scroll2" ).mouseover(function() {
+                             meteor.filter(function(d) { 
+                                    return d.fall == "Fell" 
+                        
+                    })
+                                   .attr("opacity", 0);
+                    })
+                                   .mouseout(function() {
+                             meteor.filter(function(d) { 
+                                    return d.fall == "Fell" 
+                        
+                    })
+                                   .attr("opacity", 0.5);
+                    });
+                    
+                    $( ".scroll3" ).mouseover(function() {
+                             meteor.filter(function(d) { 
+                                    return d.fall == "Found" 
+                        
+                    })
+                                   .attr("opacity", 0);
+                    })
+                                   .mouseout(function() {
+                             meteor.filter(function(d) { 
+                                    return d.fall == "Found" 
+                        
+                    })           
+                                   .attr("opacity", 0.5);
+                    });
 }
       $(document).ready(function() {
                 $("#1").click(function(){
@@ -582,14 +628,6 @@ function HideDiv() {
                                     .filter(function(d) 
                                         { return d.fall == "Found" })
                                     .size();
-                            
-                    d3.select(".scroll2")
-                    //.append("div")
-                    .text("Found: " + foundcount);
-                    
-                    d3.select(".scroll3")
-                    //.append("div")
-                    .text("Observed: " + fallencount);
              
                 }); 
         });    
@@ -615,22 +653,6 @@ function HideDiv() {
             }
           
           loadYears();
-                
-            //Transition the Observed scroll from 0 using custom tween fucntion 
-            //d3.select(".scroll2")
-            //  .append("div")
-            //  .text(0)
-            //  .transition()
-            //  .duration(foundcount*30 )
-            //  .tween('text', customtween("Found: ",foundcount));
-             
-            //Transition the Observed scroll from 0 using custom tween fucntion      
-           // d3.select(".scroll3")
-            //  .append("div")
-            //  .text(0)
-            //  .transition()
-             // .duration( fallencount*1200 )
-            //  .tween('text', customtween("Observed: ",fallencount));
  
        });
     });
