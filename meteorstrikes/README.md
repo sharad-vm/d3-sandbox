@@ -87,6 +87,25 @@ From the same person who gave Feedback 3
 
 [Final Version](http://bl.ocks.org/sharad-vm/af74ae5932de1bcf5a39b0f3f849d847)
 
+### Story Points
+
+* The most important observation that I want to drive home is that there have been immensely 
+more number of meteorites that were found than observed.
+* All the technologically advanced countries have found a lot of meteorites and vice versa. 
+US, Australia, New Zealand, parts of Europe have a lot of found meteorites when compared 
+against their observed meteorites. India, Pakistan and all the middle eastern countries 
+have a lot of observed meteorites and almost negligible amount of found meteorites.
+However, Africa is one exception to this list. This could be due to the excavations 
+from other first world countries in Africa.
+* With the Population Density view, I want to point out that all the highly populated 
+regions had the most number of observed meteorites.
+* Almost all the meteorites are away from the poles on the map. This could be due to 2 reasons 
+  - Due to poor human inhabitation in those areas the meteorites were neither found nore observed OR
+  - Due to the curvature of the planet and smaller surface area near the poles, the chances of 
+    meteorite striking the planet away from the poles is probably higher.
+* Hover over the Observed and Found scrolls on the top to clearly notice the distribution of the 
+meteorites that are selected.
+
 ### Conclusion
 
 While I'm happy with the outcome of this visualization, I want to acknowledge the performance issue in SVG handling 
